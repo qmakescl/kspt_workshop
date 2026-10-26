@@ -100,7 +100,7 @@ def main() -> None:
         try:
             import kagglehub
         except ImportError:
-            parser.error("kagglehub가 필요합니다. 준비한 Python 환경에서 uv pip install kagglehub를 실행하세요.")
+            parser.error("kagglehub가 필요합니다. 가상환경을 활성화한 뒤 프로젝트 루트에서 uv add kagglehub를 실행하세요.")
         data.mkdir(parents=True, exist_ok=True)
         # Kaggle 캐시 경로가 아닌 프로젝트 내부에 원본을 직접 저장한다.
         source = Path(kagglehub.dataset_download(args.handle, output_dir=str(data / "raw"))).resolve()

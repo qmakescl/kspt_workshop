@@ -15,13 +15,13 @@
 
 | 단계 | 활동 | 완료 확인 |
 | --- | --- | --- |
-| 1 | Notion “공통 작업환경 구축”: 상위 작업 폴더 생성 → Git 설치 → uv 설치 및 Python 3.12 가상환경 준비 → Antigravity IDE 설치·실행 | IDE와 Python 실행 가능 |
-| 2 | 저장소 clone 후 IDE에서 폴더 열기 | README와 src 확인 |
+| 1 | Notion “공통 작업환경 구축”: 상위 작업 폴더 생성 → Git 설치 → uv 설치 → Antigravity IDE 설치·실행 | `git`, `uv` 실행 가능 |
+| 2 | 저장소 clone 후 IDE에서 폴더 열기 → `uv init`·`uv venv`로 Python 3.12 가상환경 생성 → 활성화 | `python --version`이 3.12 |
 | 3 | 예제 데이터 다운로드 및 생성 | 학습·시험 이미지와 manifest 확인 |
 | 4 | Teachable Machine 학습·판독 → 결과 해석 | 실제·예측 라벨과 지표 기록 |
 | 5 | 로컬 에이전트로 전처리 → 모델 생성 → 학습 → 평가 → export | 코드·결과·모델 저장 |
 
-가상환경은 공통 작업환경 구축 단계에서 직접 준비합니다. 환경 설정 파일과 잠금 파일은 이 저장소에 포함하지 않습니다.
+가상환경은 저장소를 복제한 뒤 프로젝트 루트에서 직접 만듭니다. 패키지는 `uv add`로 설치해 `pyproject.toml`과 `uv.lock`에 기록합니다. 이 파일들은 참가자가 각자 만들며 저장소에는 포함하지 않습니다.
 
 ## 시작하기
 
@@ -32,11 +32,26 @@ git clone https://github.com/qmakescl/kspt_workshop.git
 cd kspt_workshop
 ```
 
-Antigravity에서 복제한 폴더를 엽니다. 준비한 Python 3.12 환경을 사용하고 있는지 확인한 뒤 실행합니다.
+Antigravity에서 복제한 폴더를 열고, 터미널에서 프로젝트 루트(`kspt_workshop/`)에 uv 프로젝트와 Python 3.12 가상환경을 만듭니다.
+
+```bash
+uv init --python 3.12
+uv venv
+```
+
+가상환경을 활성화합니다. 이후 명령은 모두 활성화한 터미널에서 실행하며, 새 터미널을 열면 다시 활성화합니다.
+
+| 운영체제·터미널 | 명령 |
+| --- | --- |
+| macOS (zsh) | `source .venv/bin/activate` |
+| Windows (PowerShell) | `.\.venv\Scripts\Activate.ps1` |
+| Windows (명령 프롬프트) | `.venv\Scripts\activate.bat` |
+
+Python 버전을 확인하고 kagglehub를 추가한 뒤 데이터를 준비합니다.
 
 ```bash
 python --version
-uv pip install kagglehub
+uv add kagglehub
 python src/00.get_images.py
 ```
 
