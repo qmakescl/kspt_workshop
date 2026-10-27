@@ -1,11 +1,11 @@
 # 로컬 코딩 에이전트 프롬프트
 
-프롬프트는 순서 없는 목록으로 적었습니다. 한 단계씩 요청하고 코드·실행 결과를 확인합니다. 오류는 실행 명령과 메시지를 함께 전달해 수정합니다. 경로는 코드 파일 위치를 기준으로 처리하도록 요청하세요.
+프롬프트는 첫 줄에 목적을 한 문장으로, 그 아래에 세부 조건을 목록으로 적었습니다. 한 단계씩 요청하고 코드·실행 결과를 확인합니다. 오류는 실행 명령과 메시지를 함께 전달해 수정합니다. 경로는 코드 파일 위치를 기준으로 처리하도록 요청하세요.
 
 ## 1. 전처리
 
 ```markdown
-- 만들 파일: src/01.preprocess.py
+학습 전에 이미지를 확인하고 학습·검증·시험 세트로 나누는 전처리 스크립트 src/01.preprocess.py를 만들어줘.
 - 먼저 읽을 것: README, dataset/teachable_machine/manifest.csv
 - 입력: dataset/raw 아래의 이미지 파일만
 - 클래스별 이미지 개수 출력
@@ -25,7 +25,7 @@
 ## 2. 모델 생성·학습
 
 ```markdown
-- 만들 파일: src/02.train.py
+감염·비감염 세포를 분류하는 작은 CNN을 만들어 실제로 학습하는 src/02.train.py를 만들어줘.
 - 데이터: dataset/splits.csv
 - 모델: TensorFlow CNN, CPU용 작은 모델, 입력 96×96
 - 학습: 실제 model.fit, 기본 5 epoch
@@ -45,8 +45,9 @@
 ## 3. 평가
 
 ```markdown
-- 만들 파일: src/03.evaluate.py
-- 저장된 모델을 다시 읽어 고정 시험 세트만 평가
+저장한 모델을 고정 시험 세트로 평가하는 src/03.evaluate.py를 만들어줘.
+- 모델: 저장된 파일을 다시 읽어서 사용
+- 평가 대상: 고정 시험 세트만
 - 양성: 감염(Parasitized), 임계값 기본 0.5
 - 계산: TP/FN/FP/TN, 정확도·재현율·정밀도·특이도·ROC AUC
 - 분모가 0이거나 AUC를 정의할 수 없으면 이유 기록
@@ -61,7 +62,7 @@
 ## 4. Export
 
 ```markdown
-- 만들 파일: src/04.export.py
+학습한 모델을 다른 환경에서도 같은 기준으로 쓸 수 있게 내보내는 src/04.export.py를 만들어줘.
 - 저장(models/export/): 모델, labels.json
 - 저장(models/export/): preprocessing.json(입력 크기·RGB·정규화·임계값)
 - Keras 저장 형식과 배포용 export 형식의 목적 설명, 필요한 형식 선택
@@ -74,8 +75,8 @@
 ## 5. 선택: 전이학습
 
 ```markdown
-- 만들 파일: src/05.train_transfer.py
-- 모델: MobileNetV2 전이학습, ImageNet 가중치, 모델 전용 전처리, 기반층 고정
+같은 조건에서 MobileNetV2 전이학습 모델을 만들어 기존 결과와 비교하는 src/05.train_transfer.py를 만들어줘.
+- 모델: ImageNet 가중치, 모델 전용 전처리, 기반층 고정
 - 데이터: 같은 dataset/splits.csv와 시험 세트
 - 기존 결과는 덮어쓰지 말고 별도 저장
 - 같은 시험 이미지로 TM·CNN·전이학습 비교
